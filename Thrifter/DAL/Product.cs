@@ -25,6 +25,7 @@ namespace Thrifter.DAL
         public string Name { get; set; }
         public double AvgOriginalPrice { get; set; }
         public double AvgOfferedPrice { get; set; }
+        public string ImageLink { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductOwnership> ProductOwnerships { get; set; }

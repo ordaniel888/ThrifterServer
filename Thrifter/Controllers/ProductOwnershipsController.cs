@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -71,33 +73,51 @@ namespace Thrifter.Controllers
         }
 
         // POST: api/ProductOwnerships
-        [ResponseType(typeof(ProductOwnership))]
-        public IHttpActionResult PostProductOwnership(ProductOwnership productOwnership)
+        public IHttpActionResult PostProductOwnership(string json)
         {
-            if (!ModelState.IsValid)
+            JObject body = JObject.Parse(json);
+
+            var email = body.GetValue("Email").ToString();
+            Owner owner = db.Owners.FirstOrDefault(x => x.Email.Equals(email));
+            if (owner == null)
             {
-                return BadRequest(ModelState);
+                owner = new Owner() { Email = email };
+                db.Owners.Add(owner);
             }
 
-            db.ProductOwnerships.Add(productOwnership);
+            JArray productsBought = body.GetValue("Products") as JArray;
 
-            try
+            foreach (JObject currProd in productsBought)
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (ProductOwnershipExists(productOwnership.BuyDate))
+                Product newProd = db.Products.FirstOrDefault(x => x.Name.Equals(currProd.GetValue("Name")));
+
+                if (newProd == null)
                 {
-                    return Conflict();
+                    newProd = new Product
+                    {
+                        Name = currProd.GetValue("Name").ToString(),
+                        AvgOriginalPrice = double.Parse(currProd.GetValue("Price").ToString()),
+                        ImageLink = currProd.GetValue("ImageLink").ToString()
+                    };
+
+                    db.Products.Add(newProd);
                 }
-                else
-                {
-                    throw;
-                }
+                
+                db.ProductOwnerships.Add(new ProductOwnership() {
+                    BuyDate = DateTime.Now,
+                    IsSelling = false,
+                    NotificationDate = DateTime.Now.AddSeconds(15),
+                    Owner = owner,
+                    OwnerId = owner.Id,
+                    Product = newProd,
+                    ProductId = newProd.Id,
+                    State = (int)State.New
+                });
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = productOwnership.BuyDate }, productOwnership);
+            db.SaveChanges();
+
+            return Ok();
         }
 
         // DELETE: api/ProductOwnerships/5
