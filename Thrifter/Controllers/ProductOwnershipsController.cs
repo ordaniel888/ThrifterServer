@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -73,11 +75,47 @@ namespace Thrifter.Controllers
         // POST: api/ProductOwnerships
         public IHttpActionResult PostProductOwnership(string json)
         {
+            JObject body = JObject.Parse(json);
 
-            
-                db.SaveChanges();
-            
-            
+            var email = body.GetValue("Email").ToString();
+            Owner owner = db.Owners.FirstOrDefault(x => x.Email.Equals(email));
+            if (owner == null)
+            {
+                owner = new Owner() { Email = email };
+                db.Owners.Add(owner);
+            }
+
+            JArray productsBought = body.GetValue("Products") as JArray;
+
+            foreach (JObject currProd in productsBought)
+            {
+                Product newProd = db.Products.FirstOrDefault(x => x.Name.Equals(currProd.GetValue("Name")));
+
+                if (newProd == null)
+                {
+                    newProd = new Product
+                    {
+                        Name = currProd.GetValue("Name").ToString(),
+                        AvgOriginalPrice = double.Parse(currProd.GetValue("Price").ToString()),
+                        ImageLink = currProd.GetValue("ImageLink").ToString()
+                    };
+
+                    db.Products.Add(newProd);
+                }
+                
+                db.ProductOwnerships.Add(new ProductOwnership() {
+                    BuyDate = DateTime.Now,
+                    IsSelling = false,
+                    NotificationDate = DateTime.Now.AddSeconds(15),
+                    Owner = owner,
+                    OwnerId = owner.Id,
+                    Product = newProd,
+                    ProductId = newProd.Id,
+                    State = (int)State.New
+                });
+            }
+
+            db.SaveChanges();
 
             return Ok();
         }

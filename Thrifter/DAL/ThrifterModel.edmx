@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="tbdrModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="tbdrModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Owners">
           <Key>
             <PropertyRef Name="Id" />
@@ -39,6 +39,7 @@
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="AvgOriginalPrice" Type="float" Nullable="false" />
           <Property Name="AvgOfferedPrice" Type="float" Nullable="false" />
+          <Property Name="ImageLink" Type="varchar(max)" />
         </EntityType>
         <Association Name="FK_ProductOwnershipOwner">
           <End Role="Owners" Type="Self.Owners" Multiplicity="1" />
@@ -77,8 +78,7 @@
             <End Role="ProductOwnerships" EntitySet="ProductOwnerships" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="tbdrModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -120,6 +120,7 @@
           <Property Name="AvgOriginalPrice" Type="Double" Nullable="false" />
           <Property Name="AvgOfferedPrice" Type="Double" Nullable="false" />
           <NavigationProperty Name="ProductOwnerships" Relationship="Self.FK_ProductProductOwnership" FromRole="Products" ToRole="ProductOwnerships" />
+          <Property Name="ImageLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_ProductOwnershipOwner">
           <End Role="Owners" Type="Self.Owner" Multiplicity="1" />
@@ -192,6 +193,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="tbdrModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Tags" ColumnName="Tags" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
