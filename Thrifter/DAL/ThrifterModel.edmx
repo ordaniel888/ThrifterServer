@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="tbdrModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Owners">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Place" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductOwnerships">
+          <Key>
+            <PropertyRef Name="BuyDate" />
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="OwnerId" />
+          </Key>
+          <Property Name="IsSelling" Type="bit" Nullable="false" />
+          <Property Name="BuyDate" Type="datetime" Nullable="false" />
+          <Property Name="OfferedPrice" Type="float" />
+          <Property Name="SellReason" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="State" Type="int" Nullable="false" />
+          <Property Name="NotificationDate" Type="datetime" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="OwnerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tags" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AvgOriginalPrice" Type="float" Nullable="false" />
+          <Property Name="AvgOfferedPrice" Type="float" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ProductOwnershipOwner">
+          <End Role="Owners" Type="Self.Owners" Multiplicity="1" />
+          <End Role="ProductOwnerships" Type="Self.ProductOwnerships" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owners">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductOwnerships">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductProductOwnership">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductOwnerships" Type="Self.ProductOwnerships" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductOwnerships">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="tbdrModelStoreContainer">
+          <EntitySet Name="Owners" EntityType="Self.Owners" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductOwnerships" EntityType="Self.ProductOwnerships" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ProductOwnershipOwner" Association="Self.FK_ProductOwnershipOwner">
+            <End Role="Owners" EntitySet="Owners" />
+            <End Role="ProductOwnerships" EntitySet="ProductOwnerships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductProductOwnership" Association="Self.FK_ProductProductOwnership">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductOwnerships" EntitySet="ProductOwnerships" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="tbdrModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Owner">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Place" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProductOwnerships" Relationship="Self.FK_ProductOwnershipOwner" FromRole="Owners" ToRole="ProductOwnerships" />
+        </EntityType>
+        <EntityType Name="ProductOwnership">
+          <Key>
+            <PropertyRef Name="BuyDate" />
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="OwnerId" />
+          </Key>
+          <Property Name="IsSelling" Type="Boolean" Nullable="false" />
+          <Property Name="BuyDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OfferedPrice" Type="Double" />
+          <Property Name="SellReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="State" Type="Int32" Nullable="false" />
+          <Property Name="NotificationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="OwnerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Owner" Relationship="Self.FK_ProductOwnershipOwner" FromRole="ProductOwnerships" ToRole="Owners" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_ProductProductOwnership" FromRole="ProductOwnerships" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tags" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AvgOriginalPrice" Type="Double" Nullable="false" />
+          <Property Name="AvgOfferedPrice" Type="Double" Nullable="false" />
+          <NavigationProperty Name="ProductOwnerships" Relationship="Self.FK_ProductProductOwnership" FromRole="Products" ToRole="ProductOwnerships" />
+        </EntityType>
+        <Association Name="FK_ProductOwnershipOwner">
+          <End Role="Owners" Type="Self.Owner" Multiplicity="1" />
+          <End Role="ProductOwnerships" Type="Self.ProductOwnership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Owners">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductOwnerships">
+              <PropertyRef Name="OwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductProductOwnership">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductOwnerships" Type="Self.ProductOwnership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductOwnerships">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="tbdrEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Owners" EntityType="Self.Owner" />
+          <EntitySet Name="ProductOwnerships" EntityType="Self.ProductOwnership" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <AssociationSet Name="FK_ProductOwnershipOwner" Association="Self.FK_ProductOwnershipOwner">
+            <End Role="Owners" EntitySet="Owners" />
+            <End Role="ProductOwnerships" EntitySet="ProductOwnerships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductProductOwnership" Association="Self.FK_ProductProductOwnership">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductOwnerships" EntitySet="ProductOwnerships" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="tbdrModelStoreContainer" CdmEntityContainer="tbdrEntities">
+          <EntitySetMapping Name="Owners">
+            <EntityTypeMapping TypeName="tbdrModel.Owner">
+              <MappingFragment StoreEntitySet="Owners">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Place" ColumnName="Place" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductOwnerships">
+            <EntityTypeMapping TypeName="tbdrModel.ProductOwnership">
+              <MappingFragment StoreEntitySet="ProductOwnerships">
+                <ScalarProperty Name="IsSelling" ColumnName="IsSelling" />
+                <ScalarProperty Name="BuyDate" ColumnName="BuyDate" />
+                <ScalarProperty Name="OfferedPrice" ColumnName="OfferedPrice" />
+                <ScalarProperty Name="SellReason" ColumnName="SellReason" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="NotificationDate" ColumnName="NotificationDate" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="tbdrModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Tags" ColumnName="Tags" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AvgOriginalPrice" ColumnName="AvgOriginalPrice" />
+                <ScalarProperty Name="AvgOfferedPrice" ColumnName="AvgOfferedPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
