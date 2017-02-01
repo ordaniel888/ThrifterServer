@@ -71,33 +71,15 @@ namespace Thrifter.Controllers
         }
 
         // POST: api/ProductOwnerships
-        [ResponseType(typeof(ProductOwnership))]
-        public IHttpActionResult PostProductOwnership(ProductOwnership productOwnership)
+        public IHttpActionResult PostProductOwnership(string json)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            db.ProductOwnerships.Add(productOwnership);
-
-            try
-            {
+            
                 db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (ProductOwnershipExists(productOwnership.BuyDate))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            
+            
 
-            return CreatedAtRoute("DefaultApi", new { id = productOwnership.BuyDate }, productOwnership);
+            return Ok();
         }
 
         // DELETE: api/ProductOwnerships/5
