@@ -16,7 +16,7 @@ namespace Thrifter.Controllers
 {
     public class ProductOwnershipsController : ApiController
     {
-        private tbdrEntities db = new tbdrEntities();
+        private ThrifterModel db = new ThrifterModel();
 
         // GET: api/ProductOwnerships
         public IQueryable<ProductOwnership> GetProductOwnerships()
@@ -73,8 +73,10 @@ namespace Thrifter.Controllers
         }
 
         // POST: api/ProductOwnerships
-        public IHttpActionResult PostProductOwnership(string json)
+        public IHttpActionResult PostProductOwnership([FromBody]string json)
         {
+            return Ok("Samir");
+
             JObject body = JObject.Parse(json);
 
             var email = body.GetValue("Email").ToString();
@@ -117,7 +119,7 @@ namespace Thrifter.Controllers
 
             db.SaveChanges();
 
-            return Ok();
+            return Ok("kaki");
         }
 
         // DELETE: api/ProductOwnerships/5

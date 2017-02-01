@@ -14,7 +14,7 @@ namespace Thrifter.Controllers
 {
     public class OwnersController : ApiController
     {
-        private tbdrEntities db = new tbdrEntities();
+        private ThrifterModel db = new ThrifterModel();
 
         // GET: api/Owners
         public IQueryable<Owner> GetOwners()

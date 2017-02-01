@@ -15,7 +15,7 @@ namespace Thrifter.Controllers
 {
     public class ProductsController : ApiController
     {
-        private tbdrEntities db = new tbdrEntities();
+        private ThrifterModel db = new ThrifterModel();
 
         // GET: api/Products
         public IQueryable<Product> GetProducts()

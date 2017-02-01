@@ -241,30 +241,10 @@
     <Compile Include="Controllers\OwnersController.cs" />
     <Compile Include="Controllers\ProductOwnershipsController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
-    <Compile Include="DAL\Owner.cs">
-      <DependentUpon>ThrifterModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\Product.cs">
-      <DependentUpon>ThrifterModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\ProductOwnership.cs">
-      <DependentUpon>ThrifterModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\ThrifterModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ThrifterModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\ThrifterModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ThrifterModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\ThrifterModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ThrifterModel.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="DAL\Owner.cs" />
+    <Compile Include="DAL\Product.cs" />
+    <Compile Include="DAL\ProductOwnership.cs" />
+    <Compile Include="DAL\ThrifterModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -276,16 +256,6 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="DAL\ThrifterModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ThrifterModel.edmx</DependentUpon>
-      <LastGenOutput>ThrifterModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DAL\ThrifterModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ThrifterModel.edmx</DependentUpon>
-      <LastGenOutput>ThrifterModel.cs</LastGenOutput>
-    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -312,13 +282,6 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <EntityDeploy Include="DAL\ThrifterModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ThrifterModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="DAL\ThrifterModel.edmx.diagram">
-      <DependentUpon>ThrifterModel.edmx</DependentUpon>
     </Content>
     <Content Include="Metadata\deploymentTemplates\apiappconfig.azureresource.json" />
     <Content Include="apiapp.json" />
