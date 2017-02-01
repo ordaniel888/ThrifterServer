@@ -111,7 +111,7 @@ namespace Thrifter.Controllers
                     OwnerId = owner.Id,
                     Product = newProd,
                     ProductId = newProd.Id,
-                    State = (int)State.New
+                    State = 1
                 });
             }
 
