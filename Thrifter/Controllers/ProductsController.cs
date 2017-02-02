@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Thrifter.DAL;
+using Thrifter.Utils;
 
 namespace Thrifter.Controllers
 {
@@ -21,6 +22,8 @@ namespace Thrifter.Controllers
         public IHttpActionResult GetSimularProducts([FromUri]string name)
         {
             return Ok("ok");
+            string[] tags = getTagsFromName(name);
+
         }
 
         // GET: api/Products
