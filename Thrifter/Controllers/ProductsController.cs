@@ -17,6 +17,12 @@ namespace Thrifter.Controllers
     {
         private ThrifterModel db = new ThrifterModel();
 
+        [Route("/api/Products/Simular")]
+        public IHttpActionResult GetSimularProducts([FromUri]string name)
+        {
+            return Ok("ok");
+        }
+
         // GET: api/Products
         public IQueryable<Product> GetProducts()
         {
