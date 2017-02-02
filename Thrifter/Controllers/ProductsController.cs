@@ -22,7 +22,7 @@ namespace Thrifter.Controllers
         public IHttpActionResult GetSimularProducts([FromUri]string name)
         {
             return Ok("ok");
-            string[] tags = getTagsFromName(name);
+            string[] tags = HelperMethods.getTagsFromName(name);
 
         }
 

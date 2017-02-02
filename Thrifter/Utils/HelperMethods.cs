@@ -7,7 +7,7 @@ namespace Thrifter.Utils
 {
     public class HelperMethods
     {
-        public string[] getTagsFromName(string name){
+        public static string[] getTagsFromName(string name){
             string[] tags = name.Split(' ');
             return tags;
         }
