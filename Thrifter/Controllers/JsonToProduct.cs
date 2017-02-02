@@ -12,6 +12,7 @@ namespace Thrifter.Controllers
         [JsonProperty]
         public string Email { get; set; }
 
+        [JsonProperty]
         public List<Product> Products { get; set; }
     }
 }
