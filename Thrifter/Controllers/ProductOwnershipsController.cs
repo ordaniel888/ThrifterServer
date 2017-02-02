@@ -73,13 +73,9 @@ namespace Thrifter.Controllers
         }
 
         // POST: api/ProductOwnerships
-        public IHttpActionResult PostProductOwnership([FromBody]string json)
-        {
-            return Ok("Samir");
-
-            JObject body = JObject.Parse(json);
-
-            var email = body.GetValue("Email").ToString();
+        public IHttpActionResult PostProductOwnership([FromBody]JsonToProduct json)
+        {            
+            var email = json.Email;
             Owner owner = db.Owners.FirstOrDefault(x => x.Email.Equals(email));
             if (owner == null)
             {
@@ -87,19 +83,19 @@ namespace Thrifter.Controllers
                 db.Owners.Add(owner);
             }
 
-            JArray productsBought = body.GetValue("Products") as JArray;
+            var productsBought = json.Products;
 
-            foreach (JObject currProd in productsBought)
+            foreach (Product currProd in productsBought)
             {
-                Product newProd = db.Products.FirstOrDefault(x => x.Name.Equals(currProd.GetValue("Name")));
+                Product newProd = db.Products.FirstOrDefault(x => x.Name.Equals(currProd.Name));
 
                 if (newProd == null)
                 {
                     newProd = new Product
                     {
-                        Name = currProd.GetValue("Name").ToString(),
-                        AvgOriginalPrice = double.Parse(currProd.GetValue("Price").ToString()),
-                        ImageLink = currProd.GetValue("ImageLink").ToString()
+                        Name = currProd.Name,
+                        AvgOriginalPrice = currProd.AvgOriginalPrice,
+                        ImageLink = currProd.ImageLink
                     };
 
                     db.Products.Add(newProd);
@@ -119,7 +115,7 @@ namespace Thrifter.Controllers
 
             db.SaveChanges();
 
-            return Ok("kaki");
+            return Ok("Samir the dead terrorist");
         }
 
         // DELETE: api/ProductOwnerships/5

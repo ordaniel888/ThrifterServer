@@ -1,5 +1,6 @@
 namespace Thrifter.DAL
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -14,18 +15,22 @@ namespace Thrifter.DAL
             ProductOwnerships = new HashSet<ProductOwnership>();
         }
 
+        [JsonProperty]
         public int Id { get; set; }
 
-        [Required]
+        [JsonProperty]
         public string Tags { get; set; }
 
-        [Required]
+        [JsonProperty]
         public string Name { get; set; }
 
+        [JsonProperty("Price")]
         public double AvgOriginalPrice { get; set; }
 
+        [JsonProperty]
         public double AvgOfferedPrice { get; set; }
 
+        [JsonProperty]
         public string ImageLink { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

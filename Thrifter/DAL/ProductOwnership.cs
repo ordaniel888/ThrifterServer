@@ -16,7 +16,7 @@ namespace Thrifter.DAL
 
         public double? OfferedPrice { get; set; }
 
-        [Required]
+        
         public string SellReason { get; set; }
 
         public int State { get; set; }
