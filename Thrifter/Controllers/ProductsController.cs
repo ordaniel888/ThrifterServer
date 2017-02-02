@@ -17,7 +17,6 @@ namespace Thrifter.Controllers
     public class ProductsController : ApiController
     {
         private ThrifterModel db = new ThrifterModel();
-        //bcbvc
         [Route("/api/Products/Simular")]
         public IHttpActionResult GetSimularProducts([FromUri]string name)
         {
