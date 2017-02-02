@@ -10,12 +10,21 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Thrifter.DAL;
+using Thrifter.Utils;
 
 namespace Thrifter.Controllers
 {
     public class ProductsController : ApiController
     {
         private ThrifterModel db = new ThrifterModel();
+
+        [Route("/api/Products/Simular")]
+        public IHttpActionResult GetSimularProducts([FromUri]string name)
+        {
+            return Ok("ok");
+            string[] tags = getTagsFromName(name);
+
+        }
 
         // GET: api/Products
         public IQueryable<Product> GetProducts()
