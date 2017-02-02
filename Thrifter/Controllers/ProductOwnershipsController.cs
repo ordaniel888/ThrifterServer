@@ -77,6 +77,9 @@ namespace Thrifter.Controllers
         {            
             var email = json.Email;
             Owner owner = db.Owners.FirstOrDefault(x => x.Email.Equals(email));
+
+            
+
             if (owner == null)
             {
                 owner = new Owner() { Email = email };
@@ -88,7 +91,7 @@ namespace Thrifter.Controllers
             foreach (Product currProd in productsBought)
             {
                 Product newProd = db.Products.FirstOrDefault(x => x.Name.Equals(currProd.Name));
-
+                
                 if (newProd == null)
                 {
                     newProd = new Product
